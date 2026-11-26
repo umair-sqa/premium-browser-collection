@@ -1,0 +1,37 @@
+{
+  "manifest_version": 3,
+  "name": "Dev Terminal — Aurevia Studio",
+  "version": "1.0.0",
+  "description": "A professional developer Chrome theme with a dark terminal palette, muted green, and graphite.",
+  "theme": {
+    "images": {
+      "theme_frame": "images/theme_frame.png",
+      "theme_ntp_background": "images/theme_ntp_background.png"
+    },
+    "colors": {
+      "frame": [12, 16, 14],
+      "frame_inactive": [20, 24, 22],
+      "frame_incognito": [8, 12, 10],
+      "frame_incognito_inactive": [16, 20, 18],
+      "toolbar": [22, 28, 24],
+      "tab_text": [180, 230, 180],
+      "tab_background_text": [120, 150, 120],
+      "bookmark_text": [160, 200, 160],
+      "ntp_background": [10, 14, 12],
+      "ntp_text": [190, 230, 190],
+      "ntp_link": [80, 200, 120],
+      "ntp_header": [28, 36, 30],
+      "ntp_section": [18, 24, 20],
+      "button_background": [32, 56, 40]
+    },
+    "tints": {
+      "buttons": [0.35, 0.45, 0.55],
+      "frame": [0.35, 0.2, 0.1],
+      "background_tab": [0.35, 0.15, 0.4]
+    },
+    "properties": {
+      "ntp_background_alignment": "center",
+      "ntp_background_repeat": "no-repeat"
+    }
+  }
+}

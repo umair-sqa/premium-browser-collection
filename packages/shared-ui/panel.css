@@ -1,0 +1,110 @@
+/* Shared translucent panel primitives for New Tab dashboards */
+.av-panel {
+  background: var(--av-surface-raised, rgba(18, 22, 28, 0.72));
+  border: 1px solid var(--av-border, rgba(255, 255, 255, 0.08));
+  border-radius: var(--av-radius-lg, 16px);
+  box-shadow: var(--av-shadow-md, 0 8px 24px rgba(0, 0, 0, 0.32));
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  padding: var(--av-space-5, 1.5rem);
+}
+
+.av-panel__title {
+  font-family: var(--av-font-display, Georgia, serif);
+  font-size: 1.125rem;
+  font-weight: 600;
+  margin: 0 0 0.75rem;
+  letter-spacing: 0.02em;
+}
+
+.av-btn {
+  font-family: var(--av-font-ui, system-ui, sans-serif);
+  border: 1px solid var(--av-border, rgba(255, 255, 255, 0.12));
+  background: rgba(255, 255, 255, 0.06);
+  color: inherit;
+  border-radius: var(--av-radius-md, 8px);
+  padding: 0.5rem 0.9rem;
+  cursor: pointer;
+  min-height: 44px;
+  transition: background var(--av-duration-fast, 120ms) var(--av-ease, ease);
+}
+
+.av-btn:hover {
+  background: rgba(255, 255, 255, 0.12);
+}
+
+.av-btn:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 2px;
+}
+
+.av-btn--primary {
+  background: var(--av-accent, #c9a227);
+  color: #0a0a0a;
+  border-color: transparent;
+  font-weight: 600;
+}
+
+.av-input,
+.av-select,
+.av-textarea {
+  width: 100%;
+  font: inherit;
+  color: inherit;
+  background: rgba(0, 0, 0, 0.35);
+  border: 1px solid var(--av-border, rgba(255, 255, 255, 0.12));
+  border-radius: var(--av-radius-md, 8px);
+  padding: 0.55rem 0.75rem;
+  min-height: 44px;
+}
+
+.av-textarea {
+  min-height: 96px;
+  resize: vertical;
+}
+
+.av-settings {
+  position: fixed;
+  inset: 0;
+  background: var(--av-surface-overlay, rgba(6, 8, 12, 0.82));
+  display: grid;
+  place-items: center;
+  z-index: 1000;
+  padding: 1rem;
+}
+
+.av-settings[hidden] {
+  display: none;
+}
+
+.av-settings__sheet {
+  width: min(520px, 100%);
+  max-height: min(90vh, 720px);
+  overflow: auto;
+  background: rgba(16, 18, 24, 0.96);
+  border: 1px solid var(--av-border, rgba(255, 255, 255, 0.1));
+  border-radius: var(--av-radius-xl, 24px);
+  padding: 1.5rem;
+  box-shadow: var(--av-shadow-lg);
+}
+
+@keyframes av-fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.av-fade-in {
+  animation: av-fade-in var(--av-duration-slow, 420ms) var(--av-ease, ease) both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .av-fade-in {
+    animation: none;
+  }
+}

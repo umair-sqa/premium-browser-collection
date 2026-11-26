@@ -1,0 +1,37 @@
+{
+  "manifest_version": 3,
+  "name": "Shinobi — Aurevia Studio",
+  "version": "1.0.0",
+  "description": "A Japanese-inspired stealth Chrome theme in midnight black, charcoal, and muted crimson.",
+  "theme": {
+    "images": {
+      "theme_frame": "images/theme_frame.png",
+      "theme_ntp_background": "images/theme_ntp_background.png"
+    },
+    "colors": {
+      "frame": [14, 12, 14],
+      "frame_inactive": [22, 18, 20],
+      "frame_incognito": [10, 8, 10],
+      "frame_incognito_inactive": [18, 14, 16],
+      "toolbar": [26, 22, 24],
+      "tab_text": [240, 232, 230],
+      "tab_background_text": [160, 140, 142],
+      "bookmark_text": [220, 200, 198],
+      "ntp_background": [12, 10, 12],
+      "ntp_text": [236, 228, 226],
+      "ntp_link": [168, 64, 72],
+      "ntp_header": [32, 26, 28],
+      "ntp_section": [24, 20, 22],
+      "button_background": [72, 36, 40]
+    },
+    "tints": {
+      "buttons": [0.98, 0.35, 0.55],
+      "frame": [0.98, 0.15, 0.1],
+      "background_tab": [0.98, 0.12, 0.42]
+    },
+    "properties": {
+      "ntp_background_alignment": "center",
+      "ntp_background_repeat": "no-repeat"
+    }
+  }
+}

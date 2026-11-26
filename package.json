@@ -1,0 +1,40 @@
+{
+  "name": "premium-browser-collection",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Aurevia Studio — premium Chrome themes and New Tab extensions",
+  "type": "module",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "lint": "eslint \"packages/**/*.js\" \"scripts/**/*.mjs\" \"tests/**/*.js\" \"products/new-tab/**/*.js\" --no-error-on-unmatched-pattern",
+    "format": "prettier --write \"**/*.{js,mjs,json,md,css,html}\" --ignore-path .gitignore",
+    "format:check": "prettier --check \"**/*.{js,mjs,json,md,css,html}\" --ignore-path .gitignore",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "validate:catalog": "node scripts/validate-catalog.mjs",
+    "validate:themes": "node scripts/validate-theme.mjs",
+    "validate:extensions": "node scripts/validate-extension.mjs",
+    "validate": "npm run validate:catalog && npm run validate:themes && npm run validate:extensions",
+    "build": "node scripts/build-products.mjs",
+    "build:product": "node scripts/build-products.mjs",
+    "previews": "node scripts/generate-previews.mjs",
+    "ci": "npm run lint && npm run typecheck && npm run validate && npm test && npm run build"
+  },
+  "dependencies": {
+    "adhan": "^4.4.6"
+  },
+  "devDependencies": {
+    "@types/node": "^22.13.10",
+    "@vitest/coverage-v8": "^3.0.9",
+    "eslint": "^9.22.0",
+    "eslint-config-prettier": "^10.1.1",
+    "playwright": "^1.51.0",
+    "prettier": "^3.5.3",
+    "sharp": "^0.33.5",
+    "typescript": "^5.8.2",
+    "vitest": "^3.0.9"
+  }
+}

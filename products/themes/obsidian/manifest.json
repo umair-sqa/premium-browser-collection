@@ -1,0 +1,37 @@
+{
+  "manifest_version": 3,
+  "name": "Obsidian — Aurevia Studio",
+  "version": "1.1.0",
+  "description": "A refined matte-black Chrome theme with graphite depth and subtle champagne-gold details.",
+  "theme": {
+    "images": {
+      "theme_frame": "images/theme_frame.png",
+      "theme_ntp_background": "images/theme_ntp_background.png"
+    },
+    "colors": {
+      "frame": [18, 18, 20],
+      "frame_inactive": [25, 25, 28],
+      "frame_incognito": [15, 15, 17],
+      "frame_incognito_inactive": [22, 22, 24],
+      "toolbar": [29, 29, 32],
+      "tab_text": [239, 236, 229],
+      "tab_background_text": [174, 170, 161],
+      "bookmark_text": [225, 220, 210],
+      "ntp_background": [15, 15, 17],
+      "ntp_text": [232, 228, 219],
+      "ntp_link": [190, 160, 108],
+      "ntp_header": [35, 34, 32],
+      "ntp_section": [28, 28, 30],
+      "button_background": [55, 49, 40]
+    },
+    "tints": {
+      "buttons": [0.1, 0.22, 0.72],
+      "frame": [0.1, 0.18, 0.12],
+      "background_tab": [0.1, 0.1, 0.48]
+    },
+    "properties": {
+      "ntp_background_alignment": "bottom",
+      "ntp_background_repeat": "no-repeat"
+    }
+  }
+}

@@ -1,0 +1,37 @@
+{
+  "manifest_version": 3,
+  "name": "Aurora — Aurevia Studio",
+  "version": "1.0.0",
+  "description": "A northern-lights Chrome theme with midnight blue, emerald, teal, and violet atmospheric gradients.",
+  "theme": {
+    "images": {
+      "theme_frame": "images/theme_frame.png",
+      "theme_ntp_background": "images/theme_ntp_background.png"
+    },
+    "colors": {
+      "frame": [8, 18, 36],
+      "frame_inactive": [14, 26, 46],
+      "frame_incognito": [6, 12, 28],
+      "frame_incognito_inactive": [12, 20, 38],
+      "toolbar": [16, 32, 52],
+      "tab_text": [220, 245, 238],
+      "tab_background_text": [140, 170, 180],
+      "bookmark_text": [200, 230, 220],
+      "ntp_background": [6, 14, 30],
+      "ntp_text": [224, 240, 236],
+      "ntp_link": [80, 200, 160],
+      "ntp_header": [20, 40, 60],
+      "ntp_section": [14, 28, 48],
+      "button_background": [40, 80, 100]
+    },
+    "tints": {
+      "buttons": [0.45, 0.4, 0.55],
+      "frame": [0.55, 0.35, 0.15],
+      "background_tab": [0.55, 0.2, 0.4]
+    },
+    "properties": {
+      "ntp_background_alignment": "center",
+      "ntp_background_repeat": "no-repeat"
+    }
+  }
+}

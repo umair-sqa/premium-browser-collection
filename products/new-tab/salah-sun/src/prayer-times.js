@@ -1,169 +1,85 @@
 /**
- * Prayer-times facade over the vendored adhan UMD build (vendor/adhan.umd.min.js).
- * Exposes calculation helpers, Qibla bearing, and a simple algorithmic Hijri date.
- *
- * Hijri conversion is algorithmic (Kuwaiti/algorithmic civil calendar style) —
- * an approximation, not official Umm al-Qura calendar dates.
+ * Prayer-time facade over vendored adhan (Batoul Apps algorithm).
+ * Calculation methods are documented astronomical conventions — not fatwa.
  */
 (function (global) {
   "use strict";
 
-  const KAABA = { latitude: 21.4225, longitude: 39.8262 };
-
-  const METHOD_MAP = {
-    MuslimWorldLeague: "MuslimWorldLeague",
-    NorthAmerica: "NorthAmerica",
-    Egyptian: "Egyptian",
-    UmmAlQura: "UmmAlQura",
-    Karachi: "Karachi",
+  const METHOD_LABELS = {
+    MuslimWorldLeague: "Muslim World League",
+    Egyptian: "Egyptian General Authority",
+    Karachi: "University of Islamic Sciences, Karachi",
+    UmmAlQura: "Umm al-Qura, Makkah",
     Dubai: "Dubai",
-    Qatar: "Qatar",
+    MoonsightingCommittee: "Moonsighting Committee",
+    NorthAmerica: "ISNA (North America)",
     Kuwait: "Kuwait",
-    MoonsightingCommittee: "MoonsightingCommittee",
+    Qatar: "Qatar",
     Singapore: "Singapore",
-    Turkey: "Turkey",
     Tehran: "Tehran",
+    Turkey: "Turkey / Diyanet",
   };
 
-  function requireAdhan() {
-    if (!global.adhan) {
-      throw new Error("adhan library not loaded. Include vendor/adhan.umd.min.js first.");
-    }
-    return global.adhan;
-  }
-
-  function buildParams(methodKey, asrMethod, highLatitudeRule) {
-    const adhan = requireAdhan();
-    const key = METHOD_MAP[methodKey] || "MuslimWorldLeague";
-    const factory = adhan.CalculationMethod[key];
-    if (typeof factory !== "function") {
-      throw new Error("Unknown calculation method: " + methodKey);
-    }
+  function paramsFor(methodName, asrMethod, highLatitudeRule) {
+    const adhan = global.adhan;
+    if (!adhan) throw new Error("adhan library missing");
+    const factory = adhan.CalculationMethod[methodName] || adhan.CalculationMethod.MuslimWorldLeague;
     const params = factory();
-    params.madhab =
-      asrMethod === "Hanafi" ? adhan.Madhab.Hanafi : adhan.Madhab.Shafi;
-
-    const hl = highLatitudeRule || "MiddleOfTheNight";
-    if (adhan.HighLatitudeRule[hl]) {
-      params.highLatitudeRule = adhan.HighLatitudeRule[hl];
-    }
+    params.madhab = asrMethod === "Hanafi" ? adhan.Madhab.Hanafi : adhan.Madhab.Shafi;
+    const rule = adhan.HighLatitudeRule[highLatitudeRule] || adhan.HighLatitudeRule.MiddleOfTheNight;
+    params.highLatitudeRule = rule;
     return params;
   }
 
-  /**
-   * Compute prayer + sun times for a local calendar day.
-   * Times are Date objects in the user's local timezone (via Intl/Date).
-   */
-  function asDate(value) {
-    if (value instanceof Date && !Number.isNaN(value.getTime())) return value;
-    // Cross-realm Date objects (e.g. tests) still expose getTime
-    if (value && typeof value.getTime === "function") {
-      const t = value.getTime();
-      if (typeof t === "number" && !Number.isNaN(t)) return new Date(t);
-    }
-    return new Date();
-  }
-
-  function computePrayerTimes(latitude, longitude, date, options) {
-    const adhan = requireAdhan();
-    const opts = options || {};
-    const coordinates = new adhan.Coordinates(latitude, longitude);
-    const params = buildParams(
-      opts.calculationMethod,
-      opts.asrMethod,
-      opts.highLatitudeRule
-    );
-    const day = asDate(date);
-    const prayerTimes = new adhan.PrayerTimes(coordinates, day, params);
-
+  function compute({ latitude, longitude, date, calculationMethod, asrMethod, highLatitudeRule }) {
+    const adhan = global.adhan;
+    const coordinates = new adhan.Coordinates(Number(latitude), Number(longitude));
+    const params = paramsFor(calculationMethod, asrMethod, highLatitudeRule);
+    const d = date || new Date();
+    const times = new adhan.PrayerTimes(coordinates, d, params);
+    const qibla = adhan.Qibla(coordinates);
     return {
-      fajr: prayerTimes.fajr,
-      sunrise: prayerTimes.sunrise,
-      dhuhr: prayerTimes.dhuhr,
-      asr: prayerTimes.asr,
-      sunset: prayerTimes.sunset,
-      maghrib: prayerTimes.maghrib,
-      isha: prayerTimes.isha,
-      current: prayerTimes.currentPrayer(day),
-      next: prayerTimes.nextPrayer(day),
-      method: opts.calculationMethod || "MuslimWorldLeague",
-      asrMethod: opts.asrMethod || "Shafi",
-      highLatitudeRule: opts.highLatitudeRule || "MiddleOfTheNight",
-      _raw: prayerTimes,
+      fajr: times.fajr,
+      sunrise: times.sunrise,
+      dhuhr: times.dhuhr,
+      asr: times.asr,
+      sunset: times.sunset,
+      maghrib: times.maghrib,
+      isha: times.isha,
+      qibla,
+      methodLabel: METHOD_LABELS[calculationMethod] || calculationMethod,
+      current: times.currentPrayer(),
+      next: times.nextPrayer(),
+      timeFor: (name) => times.timeForPrayer(name),
     };
   }
 
-  /** Bearing in degrees from observer to Kaaba (0–360, clockwise from north). */
-  function qiblaBearing(latitude, longitude) {
-    const adhan = requireAdhan();
-    const coordinates = new adhan.Coordinates(latitude, longitude);
-    if (typeof adhan.Qibla === "function") {
-      return adhan.Qibla(coordinates);
-    }
-    // Fallback spherical formula (same as adhan)
-    const φ1 = (latitude * Math.PI) / 180;
-    const φ2 = (KAABA.latitude * Math.PI) / 180;
-    const Δλ = ((KAABA.longitude - longitude) * Math.PI) / 180;
-    const y = Math.sin(Δλ);
-    const x = Math.cos(φ1) * Math.tan(φ2) - Math.sin(φ1) * Math.cos(Δλ);
-    let bearing = (Math.atan2(y, x) * 180) / Math.PI;
-    return (bearing + 360) % 360;
-  }
-
-  /**
-   * Algorithmic Gregorian → Hijri (civil / Kuwaiti algorithm).
-   * Approximate — not official Umm al-Qura. Documented as such in the UI.
-   */
-  function toHijri(date) {
-    const d = asDate(date);
-    let day = d.getDate();
-    let month = d.getMonth() + 1;
-    let year = d.getFullYear();
-
-    let jd;
-    if (
-      year > 1582 ||
-      (year === 1582 && month > 10) ||
-      (year === 1582 && month === 10 && day > 14)
-    ) {
-      jd =
-        Math.trunc((1461 * (year + 4800 + Math.trunc((month - 14) / 12))) / 4) +
-        Math.trunc((367 * (month - 2 - 12 * Math.trunc((month - 14) / 12))) / 12) -
-        Math.trunc(
-          (3 *
-            Math.trunc(
-              (year + 4900 + Math.trunc((month - 14) / 12)) / 100
-            )) /
-            4
-        ) +
-        day -
-        32075;
-    } else {
-      jd =
-        367 * year -
-        Math.trunc((7 * (year + 5001 + Math.trunc((month - 9) / 7))) / 4) +
-        Math.trunc((275 * month) / 9) +
-        day +
-        1729777;
-    }
-
-    const l = jd - 1948440 + 10632;
-    const n = Math.trunc((l - 1) / 10631);
+  /** Algorithmic Hijri approximation (Kuwaiti). Not an official religious calendar. */
+  function gregorianToHijri(date) {
+    const gy = date.getFullYear();
+    const gm = date.getMonth() + 1;
+    const gd = date.getDate();
+    const jul =
+      Math.floor((1461 * (gy + 4800 + Math.floor((gm - 14) / 12))) / 4) +
+      Math.floor((367 * (gm - 2 - 12 * Math.floor((gm - 14) / 12))) / 12) -
+      Math.floor((3 * Math.floor((gy + 4900 + Math.floor((gm - 14) / 12)) / 100)) / 4) +
+      gd -
+      32075;
+    const l = jul - 1948440 + 10632;
+    const n = Math.floor((l - 1) / 10631);
     const l2 = l - 10631 * n + 354;
     const j =
-      Math.trunc((10985 - l2) / 5316) * Math.trunc((50 * l2) / 17719) +
-      Math.trunc(l2 / 5670) * Math.trunc((43 * l2) / 15238);
+      Math.floor((10985 - l2) / 5316) * Math.floor((50 * l2) / 17719) +
+      Math.floor(l2 / 5670) * Math.floor((43 * l2) / 15238);
     const l3 =
       l2 -
-      Math.trunc((30 - j) / 15) * Math.trunc((17719 * j) / 50) -
-      Math.trunc(j / 16) * Math.trunc((15238 * j) / 43) +
+      Math.floor((30 - j) / 15) * Math.floor((17719 * j) / 50) -
+      Math.floor(j / 16) * Math.floor((15238 * j) / 43) +
       29;
-    const m = Math.trunc((24 * l3) / 709);
-    const hijriDay = l3 - Math.trunc((709 * m) / 24);
-    const hijriMonth = m;
-    const hijriYear = 30 * n + j - 30;
-
-    const monthNames = [
+    const hm = Math.floor((24 * l3) / 709);
+    const hd = l3 - Math.floor((709 * hm) / 24);
+    const hy = 30 * n + j - 30;
+    const months = [
       "Muharram",
       "Safar",
       "Rabiʻ I",
@@ -174,48 +90,17 @@
       "Shaʻban",
       "Ramadan",
       "Shawwal",
-      "Dhū al-Qaʻdah",
-      "Dhū al-Ḥijjah",
+      "Dhu al-Qaʻdah",
+      "Dhu al-Hijjah",
     ];
-
     return {
-      day: hijriDay,
-      month: hijriMonth,
-      year: hijriYear,
-      monthName: monthNames[hijriMonth - 1] || "",
-      formatted:
-        hijriDay +
-        " " +
-        (monthNames[hijriMonth - 1] || "") +
-        " " +
-        hijriYear +
-        " AH",
-      approximate: true,
+      year: hy,
+      month: hm,
+      day: hd,
+      formatted: hd + " " + (months[hm - 1] || hm) + " " + hy + " AH",
+      approximation: true,
     };
   }
 
-  const PRAYER_ORDER = ["fajr", "sunrise", "dhuhr", "asr", "maghrib", "isha"];
-  const SALAH_ORDER = ["fajr", "dhuhr", "asr", "maghrib", "isha"];
-
-  const PRAYER_LABELS = {
-    fajr: "Fajr",
-    sunrise: "Sunrise",
-    dhuhr: "Dhuhr",
-    asr: "Asr",
-    sunset: "Sunset",
-    maghrib: "Maghrib",
-    isha: "Isha",
-    none: "—",
-  };
-
-  global.SalahSunPrayer = {
-    KAABA,
-    METHOD_MAP,
-    PRAYER_ORDER,
-    SALAH_ORDER,
-    PRAYER_LABELS,
-    computePrayerTimes,
-    qiblaBearing,
-    toHijri,
-  };
+  global.SalahSunPrayer = { compute, gregorianToHijri, METHOD_LABELS };
 })(typeof self !== "undefined" ? self : globalThis);
