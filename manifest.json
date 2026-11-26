@@ -1,7 +1,7 @@
 {
-  "manifest_version": 3,
-  "name": "Obsidian \u2014 Aurevia Studio",
-  "version": "1.0.0",
+  "manifest_version": 2,
+  "name": "Obsidian — Aurevia Studio",
+  "version": "1.0.1",
   "description": "A refined matte-black Chrome theme with graphite depth and subtle champagne-gold details.",
   "theme": {
     "images": {
