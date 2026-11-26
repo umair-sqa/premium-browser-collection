@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Salah &amp; Sun Companion — Aurevia Studio</title>
+    <link rel="stylesheet" href="newtab.css" />
+  </head>
+  <body>
+    <div class="bg" aria-hidden="true"></div>
+    <a class="skip" href="#main">Skip to content</a>
+
+    <header class="top">
+      <div class="brand">
+        <p class="brand__studio">Aurevia Studio</p>
+        <h1 class="brand__name">Salah &amp; Sun</h1>
+      </div>
+      <button type="button" id="settings-toggle" class="icon-btn" aria-label="Open settings" aria-expanded="false" aria-controls="settings-panel">⚙</button>
+    </header>
+
+    <main id="main" class="layout">
+      <section class="hero panel av-fade" aria-label="Clock and dates">
+        <p id="clock" class="clock">--:--:--</p>
+        <p id="gregorian-date" class="date"></p>
+        <p id="hijri-date" class="hijri" title="Algorithmic approximation"></p>
+        <p id="location-display" class="location">Location not set</p>
+      </section>
+
+      <div id="loading-state" class="panel status" role="status">Preparing prayer times…</div>
+      <div id="error-state" class="panel status status--error" hidden role="alert"></div>
+      <div id="empty-location" class="panel status" hidden>
+        <p>Set a location to calculate prayer times.</p>
+        <button type="button" id="open-settings-from-hint" class="btn primary">Open settings</button>
+      </div>
+
+      <section id="prayer-focus" class="panel focus av-fade" hidden aria-label="Current and next prayer">
+        <div>
+          <p class="label">Current</p>
+          <p id="current-prayer" class="value">—</p>
+        </div>
+        <div>
+          <p class="label">Next</p>
+          <p id="next-prayer" class="value">—</p>
+        </div>
+        <div>
+          <p class="label">Countdown</p>
+          <p id="countdown" class="value countdown">—</p>
+        </div>
+        <p id="method-badge" class="method"></p>
+      </section>
+
+      <section class="panel times av-fade" aria-label="Daily prayer times">
+        <h2>Today</h2>
+        <div id="times-grid" class="times-grid">
+          <div><span>Fajr</span><strong id="time-fajr">—</strong></div>
+          <div><span>Sunrise</span><strong id="time-sunrise">—</strong></div>
+          <div><span>Dhuhr</span><strong id="time-dhuhr">—</strong></div>
+          <div><span>Asr</span><strong id="time-asr">—</strong></div>
+          <div><span>Sunset</span><strong id="time-sunset">—</strong></div>
+          <div><span>Maghrib</span><strong id="time-maghrib">—</strong></div>
+          <div><span>Isha</span><strong id="time-isha">—</strong></div>
+        </div>
+      </section>
+
+      <section id="qibla-panel" class="panel qibla av-fade" hidden aria-label="Qibla direction">
+        <h2>Qibla</h2>
+        <div class="qibla__viz" aria-hidden="true">
+          <div id="qibla-arrow" class="qibla__arrow">↑</div>
+        </div>
+        <p id="qibla-degrees" class="qibla__deg">—</p>
+        <p class="hint">Mathematical bearing toward the Kaaba (not a magnetic compass).</p>
+      </section>
+    </main>
+
+    <div id="settings-backdrop" class="backdrop" hidden></div>
+    <aside id="settings-panel" class="settings" hidden role="dialog" aria-modal="true" aria-labelledby="settings-title">
+      <div class="settings__head">
+        <h2 id="settings-title">Settings</h2>
+        <button type="button" id="settings-close" class="icon-btn" aria-label="Close settings">✕</button>
+      </div>
+      <form id="settings-form" class="settings__body">
+        <fieldset>
+          <legend>Location</legend>
+          <p class="hint">Location is optional and stored only on this device. Geolocation is requested only when you click the button below.</p>
+          <label>Place name<input id="place-name" type="text" maxlength="80" /></label>
+          <label>Latitude<input id="latitude" type="number" step="any" min="-90" max="90" required /></label>
+          <label>Longitude<input id="longitude" type="number" step="any" min="-180" max="180" required /></label>
+          <button type="button" id="use-geolocation" class="btn">Use device location</button>
+          <p id="geo-status" class="hint" role="status"></p>
+        </fieldset>
+        <fieldset>
+          <legend>Calculation</legend>
+          <label>Method
+            <select id="calculation-method">
+              <option value="MuslimWorldLeague">Muslim World League</option>
+              <option value="NorthAmerica">ISNA (North America)</option>
+              <option value="Egyptian">Egyptian</option>
+              <option value="Karachi">Karachi</option>
+              <option value="UmmAlQura">Umm al-Qura</option>
+              <option value="Dubai">Dubai</option>
+              <option value="MoonsightingCommittee">Moonsighting Committee</option>
+              <option value="Kuwait">Kuwait</option>
+              <option value="Qatar">Qatar</option>
+              <option value="Singapore">Singapore</option>
+              <option value="Tehran">Tehran</option>
+              <option value="Turkey">Turkey</option>
+            </select>
+          </label>
+          <label>Asr
+            <select id="asr-method">
+              <option value="Shafi">Standard (Shafi)</option>
+              <option value="Hanafi">Hanafi</option>
+            </select>
+          </label>
+          <label>High latitude
+            <select id="high-latitude-rule">
+              <option value="MiddleOfTheNight">Middle of the night</option>
+              <option value="SeventhOfTheNight">Seventh of the night</option>
+              <option value="TwilightAngle">Twilight angle</option>
+            </select>
+          </label>
+        </fieldset>
+        <fieldset>
+          <legend>Reminders</legend>
+          <label class="check"><input id="reminders-enabled" type="checkbox" /> Enable prayer notifications</label>
+          <label>Minutes before<input id="reminder-minutes" type="number" min="1" max="60" value="10" /></label>
+          <p id="reminder-status" class="hint"></p>
+        </fieldset>
+        <div class="settings__actions">
+          <button type="submit" class="btn primary">Save</button>
+          <button type="button" id="settings-cancel" class="btn">Cancel</button>
+        </div>
+      </form>
+    </aside>
+
+    <script src="vendor/adhan.umd.min.js"></script>
+    <script src="storage.js"></script>
+    <script src="src/prayer-times.js"></script>
+    <script src="newtab.js"></script>
+  </body>
+</html>

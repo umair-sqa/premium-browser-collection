@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Deep Work — Aurevia Studio</title>
+    <link rel="stylesheet" href="newtab.css" />
+  </head>
+  <body>
+    <div id="loading" class="loading" role="status" aria-live="polite">
+      <div class="loading__ring" aria-hidden="true"></div>
+      <p class="loading__text">Preparing your focus space…</p>
+    </div>
+
+    <div id="bg" class="bg" aria-hidden="true">
+      <div id="bg-image" class="bg__image"></div>
+      <div id="bg-gradient" class="bg__gradient" hidden></div>
+      <div class="bg__veil"></div>
+    </div>
+
+    <a class="skip-link" href="#main">Skip to content</a>
+
+    <header class="topbar">
+      <div class="brand">
+        <span class="brand__mark" aria-hidden="true"></span>
+        <div class="brand__text">
+          <p class="brand__studio">Aurevia Studio</p>
+          <h1 class="brand__name">Deep Work</h1>
+        </div>
+      </div>
+      <button
+        type="button"
+        id="settings-open"
+        class="icon-btn"
+        aria-label="Open settings"
+        aria-controls="settings-panel"
+        aria-expanded="false"
+      >
+        <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6">
+          <circle cx="12" cy="12" r="3.2" />
+          <path d="M12 2.8v2.2M12 19v2.2M21.2 12h-2.2M4.9 12H2.8M18.5 5.5l-1.6 1.6M7.1 16.9l-1.6 1.6M18.5 18.5l-1.6-1.6M7.1 7.1 5.5 5.5" stroke-linecap="round" />
+        </svg>
+      </button>
+    </header>
+
+    <main id="main" class="dashboard">
+      <section id="widget-clock" class="hero panel" data-widget="clock" aria-label="Clock and date">
+        <p id="clock-time" class="hero__time" aria-live="polite">00:00</p>
+        <p id="clock-date" class="hero__date">—</p>
+      </section>
+
+      <section id="widget-search" class="panel search-panel" data-widget="search" aria-label="Search">
+        <form id="search-form" class="search" role="search">
+          <label class="visually-hidden" for="search-input">Search the web</label>
+          <input
+            id="search-input"
+            class="search__input"
+            type="search"
+            name="q"
+            placeholder="Search calmly…"
+            autocomplete="off"
+            enterkeyhint="search"
+          />
+          <button type="submit" class="search__btn">Search</button>
+        </form>
+        <p id="search-error" class="field-error" hidden role="alert"></p>
+      </section>
+
+      <section id="widget-quote" class="panel quote-panel" data-widget="quote" aria-label="Daily focus quote">
+        <blockquote id="quote-text" class="quote__text">Focus is a practice.</blockquote>
+        <cite id="quote-author" class="quote__author">—</cite>
+      </section>
+
+      <section id="widget-progress" class="panel progress-panel" data-widget="progress" aria-label="Daily progress">
+        <h2 class="panel__title">Today</h2>
+        <div class="progress-stats">
+          <div class="stat">
+            <span id="stat-todos" class="stat__value">0/0</span>
+            <span class="stat__label">Todos done</span>
+          </div>
+          <div class="stat">
+            <span id="stat-goals" class="stat__value">0%</span>
+            <span class="stat__label">Goals</span>
+          </div>
+        </div>
+        <div class="progress-bar" aria-hidden="true">
+          <div id="progress-fill" class="progress-bar__fill"></div>
+        </div>
+      </section>
+
+      <section id="widget-timer" class="panel timer-panel" data-widget="timer" aria-label="Focus timer">
+        <h2 class="panel__title">Focus timer</h2>
+        <div class="timer">
+          <div class="timer__ring-wrap" aria-hidden="true">
+            <svg class="timer__ring" viewBox="0 0 120 120">
+              <circle class="timer__track" cx="60" cy="60" r="52" />
+              <circle id="timer-progress" class="timer__progress" cx="60" cy="60" r="52" />
+            </svg>
+            <div class="timer__face">
+              <p id="timer-display" class="timer__time">25:00</p>
+              <p id="timer-mode" class="timer__mode">Focus</p>
+            </div>
+          </div>
+          <div class="timer__controls">
+            <button type="button" id="timer-start" class="btn btn--primary">Start</button>
+            <button type="button" id="timer-pause" class="btn" hidden>Pause</button>
+            <button type="button" id="timer-reset" class="btn btn--ghost">Reset</button>
+            <button type="button" id="timer-switch" class="btn btn--ghost">Break</button>
+          </div>
+        </div>
+      </section>
+
+      <section id="widget-todos" class="panel todos-panel" data-widget="todos" aria-label="To-do list">
+        <h2 class="panel__title">To-do</h2>
+        <form id="todo-form" class="inline-form">
+          <label class="visually-hidden" for="todo-input">Add a task</label>
+          <input id="todo-input" class="text-input" type="text" maxlength="120" placeholder="Add a task…" required />
+          <button type="submit" class="btn btn--primary">Add</button>
+        </form>
+        <ul id="todo-list" class="list"></ul>
+        <p id="todo-empty" class="empty-hint">Nothing here yet. Add one focus task.</p>
+      </section>
+
+      <section id="widget-goals" class="panel goals-panel" data-widget="goals" aria-label="Daily goals">
+        <h2 class="panel__title">Daily goals</h2>
+        <form id="goal-form" class="inline-form">
+          <label class="visually-hidden" for="goal-input">Add a goal</label>
+          <input id="goal-input" class="text-input" type="text" maxlength="100" placeholder="Add a goal…" required />
+          <button type="submit" class="btn btn--primary">Add</button>
+        </form>
+        <ul id="goal-list" class="list"></ul>
+        <p id="goal-empty" class="empty-hint">Set one clear intention for today.</p>
+      </section>
+
+      <section id="widget-shortcuts" class="panel shortcuts-panel" data-widget="shortcuts" aria-label="Shortcuts">
+        <h2 class="panel__title">Shortcuts</h2>
+        <div id="shortcut-grid" class="shortcut-grid"></div>
+        <form id="shortcut-form" class="shortcut-form">
+          <label class="visually-hidden" for="shortcut-name">Name</label>
+          <input id="shortcut-name" class="text-input" type="text" maxlength="40" placeholder="Name" required />
+          <label class="visually-hidden" for="shortcut-url">URL</label>
+          <input id="shortcut-url" class="text-input" type="url" placeholder="https://…" required />
+          <button type="submit" class="btn btn--primary">Add</button>
+        </form>
+        <p id="shortcut-error" class="field-error" hidden role="alert"></p>
+      </section>
+    </main>
+
+    <div id="settings-backdrop" class="settings-backdrop" hidden aria-hidden="true"></div>
+    <aside
+      id="settings-panel"
+      class="settings"
+      hidden
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="settings-title"
+    >
+      <div class="settings__header">
+        <h2 id="settings-title">Settings</h2>
+        <button type="button" id="settings-close" class="icon-btn" aria-label="Close settings">
+          <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8">
+            <path d="M6 6l12 12M18 6L6 18" stroke-linecap="round" />
+          </svg>
+        </button>
+      </div>
+
+      <form id="settings-form" class="settings__body">
+        <fieldset>
+          <legend>Search</legend>
+          <label class="field">
+            <span>Search engine</span>
+            <select id="setting-search-engine" class="text-input">
+              <option value="google">Google</option>
+              <option value="duckduckgo">DuckDuckGo</option>
+              <option value="bing">Bing</option>
+              <option value="ecosia">Ecosia</option>
+              <option value="custom">Custom URL prefix</option>
+            </select>
+          </label>
+          <label class="field" id="custom-search-field" hidden>
+            <span>Custom search URL (query appended)</span>
+            <input id="setting-custom-search" class="text-input" type="url" placeholder="https://example.com/search?q=" />
+          </label>
+        </fieldset>
+
+        <fieldset>
+          <legend>Focus timer</legend>
+          <div class="field-row">
+            <label class="field">
+              <span>Focus (minutes)</span>
+              <input id="setting-focus-min" class="text-input" type="number" min="1" max="180" />
+            </label>
+            <label class="field">
+              <span>Break (minutes)</span>
+              <input id="setting-break-min" class="text-input" type="number" min="1" max="60" />
+            </label>
+          </div>
+        </fieldset>
+
+        <fieldset>
+          <legend>Background</legend>
+          <label class="field">
+            <span>Mode</span>
+            <select id="setting-bg-mode" class="text-input">
+              <option value="default">Default image</option>
+              <option value="url">Custom image URL</option>
+              <option value="gradient">Gradient preset</option>
+            </select>
+          </label>
+          <label class="field" id="bg-url-field" hidden>
+            <span>Image URL</span>
+            <input id="setting-bg-url" class="text-input" type="url" placeholder="https://…" />
+          </label>
+          <p id="bg-url-error" class="field-error" hidden role="alert"></p>
+          <label class="field" id="bg-gradient-field" hidden>
+            <span>Gradient</span>
+            <select id="setting-gradient" class="text-input">
+              <option value="misty-sage">Misty Sage</option>
+              <option value="ivory-dusk">Ivory Dusk</option>
+              <option value="forest-calm">Forest Calm</option>
+            </select>
+          </label>
+        </fieldset>
+
+        <fieldset>
+          <legend>Layout</legend>
+          <p class="settings__hint">Show or hide widgets on the dashboard.</p>
+          <div class="widget-toggles">
+            <label class="check"><input type="checkbox" data-widget-toggle="clock" /> Clock</label>
+            <label class="check"><input type="checkbox" data-widget-toggle="search" /> Search</label>
+            <label class="check"><input type="checkbox" data-widget-toggle="quote" /> Quote</label>
+            <label class="check"><input type="checkbox" data-widget-toggle="progress" /> Progress</label>
+            <label class="check"><input type="checkbox" data-widget-toggle="timer" /> Timer</label>
+            <label class="check"><input type="checkbox" data-widget-toggle="todos" /> Todos</label>
+            <label class="check"><input type="checkbox" data-widget-toggle="goals" /> Goals</label>
+            <label class="check"><input type="checkbox" data-widget-toggle="shortcuts" /> Shortcuts</label>
+          </div>
+        </fieldset>
+
+        <div class="settings__actions">
+          <button type="submit" class="btn btn--primary">Save</button>
+          <p class="settings__privacy">All data stays on this device via chrome.storage.local. No analytics.</p>
+        </div>
+      </form>
+    </aside>
+
+    <div id="toast" class="toast" role="status" aria-live="polite" hidden></div>
+
+    <script src="storage.js"></script>
+    <script src="newtab.js"></script>
+  </body>
+</html>

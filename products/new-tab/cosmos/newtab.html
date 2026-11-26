@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Cosmos — Aurevia Studio</title>
+    <link rel="stylesheet" href="newtab.css" />
+  </head>
+  <body data-bg="image">
+    <div class="sky" aria-hidden="true"></div>
+    <div class="veil" aria-hidden="true"></div>
+
+    <a class="skip-link" href="#main">Skip to content</a>
+
+    <header class="topbar">
+      <div class="brand" aria-label="Cosmos by Aurevia Studio">
+        <span class="brand-mark" aria-hidden="true"></span>
+        <div class="brand-text">
+          <p class="brand-name">Cosmos</p>
+          <p class="brand-studio">Aurevia Studio</p>
+        </div>
+      </div>
+      <button
+        type="button"
+        id="settings-open"
+        class="icon-btn"
+        aria-haspopup="dialog"
+        aria-controls="settings-panel"
+        aria-expanded="false"
+        title="Settings"
+      >
+        <span class="sr-only">Open settings</span>
+        <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false">
+          <path
+            fill="currentColor"
+            d="M19.14 12.94c.04-.31.06-.63.06-.94s-.02-.63-.06-.94l2.03-1.58a.5.5 0 0 0 .12-.64l-1.92-3.32a.5.5 0 0 0-.6-.22l-2.39.96a7.07 7.07 0 0 0-1.63-.94l-.36-2.54a.5.5 0 0 0-.5-.42h-3.84a.5.5 0 0 0-.5.42l-.36 2.54c-.59.24-1.13.55-1.63.94l-2.39-.96a.5.5 0 0 0-.6.22L2.77 8.84a.5.5 0 0 0 .12.64l2.03 1.58c-.04.31-.06.63-.06.94s.02.63.06.94l-2.03 1.58a.5.5 0 0 0-.12.64l1.92 3.32c.14.24.43.34.68.22l2.39-.96c.5.39 1.04.71 1.63.94l.36 2.54c.05.24.25.42.5.42h3.84c.25 0 .45-.18.5-.42l.36-2.54c.59-.24 1.13-.55 1.63-.94l2.39.96c.25.12.54.02.68-.22l1.92-3.32a.5.5 0 0 0-.12-.64l-2.03-1.58zM12 15.5A3.5 3.5 0 1 1 12 8.5a3.5 3.5 0 0 1 0 7z"
+          />
+        </svg>
+      </button>
+    </header>
+
+    <main id="main" class="layout">
+      <section class="hero" aria-labelledby="clock-heading">
+        <h1 id="clock-heading" class="sr-only">Local time</h1>
+        <p id="clock-time" class="clock-time" aria-live="polite">--:--</p>
+        <p id="clock-date" class="clock-date">—</p>
+        <p id="clock-meta" class="clock-meta">—</p>
+      </section>
+
+      <div class="grid">
+        <section
+          id="widget-world-clocks"
+          class="panel"
+          data-widget="worldClocks"
+          aria-labelledby="world-clocks-title"
+        >
+          <header class="panel-head">
+            <h2 id="world-clocks-title">World clocks</h2>
+            <p class="panel-sub">Local time zones via Intl — no network</p>
+          </header>
+          <ul id="world-clocks-list" class="world-list"></ul>
+        </section>
+
+        <section
+          id="widget-calendar"
+          class="panel"
+          data-widget="calendar"
+          aria-labelledby="calendar-title"
+        >
+          <header class="panel-head panel-head-row">
+            <div>
+              <h2 id="calendar-title">Calendar</h2>
+              <p class="panel-sub">Month view</p>
+            </div>
+            <div class="cal-nav" role="group" aria-label="Change month">
+              <button type="button" id="cal-prev" class="icon-btn small" aria-label="Previous month">
+                ‹
+              </button>
+              <button type="button" id="cal-next" class="icon-btn small" aria-label="Next month">
+                ›
+              </button>
+            </div>
+          </header>
+          <p id="cal-label" class="cal-label" aria-live="polite"></p>
+          <div id="cal-grid" class="cal-grid" role="grid" aria-labelledby="cal-label"></div>
+        </section>
+
+        <section
+          id="widget-astronomy"
+          class="panel"
+          data-widget="astronomy"
+          aria-labelledby="astronomy-title"
+        >
+          <header class="panel-head">
+            <h2 id="astronomy-title">Sky tonight</h2>
+            <p class="panel-sub">Computed locally · approximate &amp; educational</p>
+          </header>
+          <div class="astro-stack">
+            <article class="astro-card" aria-labelledby="moon-title">
+              <h3 id="moon-title">Moon phase</h3>
+              <div class="moon-row">
+                <div id="moon-visual" class="moon-visual" aria-hidden="true"></div>
+                <div>
+                  <p id="moon-name" class="astro-value">—</p>
+                  <p id="moon-detail" class="astro-detail">—</p>
+                </div>
+              </div>
+            </article>
+            <article class="astro-card" aria-labelledby="sun-title">
+              <h3 id="sun-title">Sunrise &amp; sunset</h3>
+              <p id="sun-times" class="astro-value">Set location in settings</p>
+              <p id="sun-note" class="astro-detail">
+                Approximate solar algorithm for education — not a navigation aid.
+              </p>
+            </article>
+            <article class="astro-card" aria-labelledby="season-title">
+              <h3 id="season-title">Season &amp; year</h3>
+              <p id="season-value" class="astro-value">—</p>
+              <p id="doy-value" class="astro-detail">—</p>
+            </article>
+          </div>
+        </section>
+
+        <section
+          id="widget-planets"
+          class="panel"
+          data-widget="planets"
+          aria-labelledby="planets-title"
+        >
+          <header class="panel-head">
+            <h2 id="planets-title">Solar system</h2>
+            <p class="panel-sub">Educational · static blurbs · not live positions</p>
+          </header>
+          <ul id="planets-list" class="planet-list"></ul>
+        </section>
+
+        <section
+          id="widget-facts"
+          class="panel"
+          data-widget="facts"
+          aria-labelledby="facts-title"
+        >
+          <header class="panel-head">
+            <h2 id="facts-title">Celestial notes</h2>
+            <p class="panel-sub">Curated educational facts · not live observations</p>
+          </header>
+          <blockquote id="fact-body" class="fact-body">
+            <p id="fact-text"></p>
+            <footer id="fact-tag" class="fact-tag"></footer>
+          </blockquote>
+          <button type="button" id="fact-next" class="text-btn">Another note</button>
+        </section>
+
+        <section
+          id="widget-weather"
+          class="panel"
+          data-widget="weather"
+          aria-labelledby="weather-title"
+          hidden
+        >
+          <header class="panel-head">
+            <h2 id="weather-title">Weather</h2>
+            <p class="panel-sub">Optional · Open-Meteo when enabled</p>
+          </header>
+          <div id="weather-body" class="weather-body" aria-live="polite">
+            <p class="astro-detail">Weather is off. Enable it in settings with a lat/lng.</p>
+          </div>
+        </section>
+      </div>
+    </main>
+
+    <div
+      id="settings-backdrop"
+      class="settings-backdrop"
+      hidden
+      aria-hidden="true"
+    ></div>
+
+    <aside
+      id="settings-panel"
+      class="settings"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="settings-title"
+      hidden
+    >
+      <header class="settings-head">
+        <h2 id="settings-title">Settings</h2>
+        <button type="button" id="settings-close" class="icon-btn small" aria-label="Close settings">
+          ✕
+        </button>
+      </header>
+
+      <form id="settings-form" class="settings-form">
+        <fieldset>
+          <legend>Background</legend>
+          <label class="choice">
+            <input type="radio" name="background" value="image" />
+            Default nebula image
+          </label>
+          <label class="choice">
+            <input type="radio" name="background" value="void" />
+            Deep void gradient
+          </label>
+          <label class="choice">
+            <input type="radio" name="background" value="aurora" />
+            Polar aurora gradient
+          </label>
+        </fieldset>
+
+        <fieldset>
+          <legend>Widgets</legend>
+          <label class="choice">
+            <input type="checkbox" name="widget-worldClocks" />
+            World clocks
+          </label>
+          <label class="choice">
+            <input type="checkbox" name="widget-calendar" />
+            Calendar
+          </label>
+          <label class="choice">
+            <input type="checkbox" name="widget-astronomy" />
+            Sky tonight
+          </label>
+          <label class="choice">
+            <input type="checkbox" name="widget-planets" />
+            Solar system
+          </label>
+          <label class="choice">
+            <input type="checkbox" name="widget-facts" />
+            Celestial notes
+          </label>
+          <label class="choice">
+            <input type="checkbox" name="widget-weather" />
+            Weather panel
+          </label>
+        </fieldset>
+
+        <fieldset>
+          <legend>Location (sun times &amp; optional weather)</legend>
+          <label class="field">
+            <span>Latitude</span>
+            <input
+              type="number"
+              name="latitude"
+              id="settings-lat"
+              step="0.0001"
+              min="-90"
+              max="90"
+              placeholder="e.g. 51.5074"
+            />
+          </label>
+          <label class="field">
+            <span>Longitude</span>
+            <input
+              type="number"
+              name="longitude"
+              id="settings-lng"
+              step="0.0001"
+              min="-180"
+              max="180"
+              placeholder="e.g. -0.1278"
+            />
+          </label>
+          <label class="field">
+            <span>Place label (optional)</span>
+            <input type="text" name="placeName" id="settings-place" maxlength="80" placeholder="London" />
+          </label>
+        </fieldset>
+
+        <fieldset>
+          <legend>Weather (Open-Meteo)</legend>
+          <p class="hint">
+            Off by default. When enabled with lat/lng set, Cosmos fetches current conditions from
+            <code>api.open-meteo.com</code> (no API key). See README for privacy notes.
+          </p>
+          <label class="choice">
+            <input type="checkbox" name="weatherEnabled" id="settings-weather" />
+            Enable weather (Open-Meteo)
+          </label>
+        </fieldset>
+
+        <fieldset>
+          <legend>World clock cities</legend>
+          <p class="hint">One city per line: <code>Label | IANA/TimeZone</code></p>
+          <label class="field">
+            <span class="sr-only">Cities</span>
+            <textarea
+              id="settings-cities"
+              name="cities"
+              rows="6"
+              spellcheck="false"
+              aria-describedby="cities-hint"
+            ></textarea>
+          </label>
+          <p id="cities-hint" class="hint">Example: <code>Tokyo | Asia/Tokyo</code></p>
+        </fieldset>
+
+        <div class="settings-actions">
+          <button type="submit" class="primary-btn">Save</button>
+          <button type="button" id="settings-reset" class="text-btn">Reset defaults</button>
+        </div>
+      </form>
+    </aside>
+
+    <script src="storage.js"></script>
+    <script src="newtab.js"></script>
+  </body>
+</html>

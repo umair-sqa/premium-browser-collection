@@ -1,0 +1,217 @@
+{
+  "brand": "Aurevia Studio",
+  "collection": "Premium Browser Collection",
+  "version": "1.0.0",
+  "products": [
+    {
+      "id": "obsidian",
+      "name": "Obsidian",
+      "type": "theme",
+      "category": "native-chrome-theme",
+      "description": "Matte black, graphite, and champagne gold — restrained luxury for Chrome.",
+      "version": "1.1.0",
+      "directory": "products/themes/obsidian",
+      "brandIdentity": {
+        "palette": ["#121214", "#1D1D20", "#BEA06C"],
+        "mood": "restrained-luxury"
+      },
+      "permissions": [],
+      "assets": {
+        "frame": "images/theme_frame.png",
+        "ntpBackground": "images/theme_ntp_background.png",
+        "storePreview": "store/preview-1280x800.png"
+      },
+      "build": { "kind": "theme-copy", "outDir": "dist/themes/obsidian" },
+      "releaseStatus": "ready"
+    },
+    {
+      "id": "shinobi",
+      "name": "Shinobi",
+      "type": "theme",
+      "category": "native-chrome-theme",
+      "description": "Japanese-inspired stealth aesthetic in midnight black, charcoal, and muted crimson.",
+      "version": "1.0.0",
+      "directory": "products/themes/shinobi",
+      "brandIdentity": {
+        "palette": ["#0E0C0E", "#1A1618", "#A84048"],
+        "mood": "stealth-elegance"
+      },
+      "permissions": [],
+      "assets": {
+        "frame": "images/theme_frame.png",
+        "ntpBackground": "images/theme_ntp_background.png",
+        "storePreview": "store/preview-1280x800.png"
+      },
+      "build": { "kind": "theme-copy", "outDir": "dist/themes/shinobi" },
+      "releaseStatus": "ready"
+    },
+    {
+      "id": "aurora",
+      "name": "Aurora",
+      "type": "theme",
+      "category": "native-chrome-theme",
+      "description": "Northern lights atmosphere with midnight blue, emerald, teal, and violet.",
+      "version": "1.0.0",
+      "directory": "products/themes/aurora",
+      "brandIdentity": {
+        "palette": ["#081224", "#50C8A0", "#6B4C9A"],
+        "mood": "atmospheric"
+      },
+      "permissions": [],
+      "assets": {
+        "frame": "images/theme_frame.png",
+        "ntpBackground": "images/theme_ntp_background.png",
+        "storePreview": "store/preview-1280x800.png"
+      },
+      "build": { "kind": "theme-copy", "outDir": "dist/themes/aurora" },
+      "releaseStatus": "ready"
+    },
+    {
+      "id": "nebula",
+      "name": "Nebula",
+      "type": "theme",
+      "category": "native-chrome-theme",
+      "description": "Deep-space exploration with cosmic clouds, indigo, violet, and starlight.",
+      "version": "1.0.0",
+      "directory": "products/themes/nebula",
+      "brandIdentity": {
+        "palette": ["#0A081C", "#A078FF", "#1C1430"],
+        "mood": "cosmic"
+      },
+      "permissions": [],
+      "assets": {
+        "frame": "images/theme_frame.png",
+        "ntpBackground": "images/theme_ntp_background.png",
+        "storePreview": "store/preview-1280x800.png"
+      },
+      "build": { "kind": "theme-copy", "outDir": "dist/themes/nebula" },
+      "releaseStatus": "ready"
+    },
+    {
+      "id": "dev-terminal",
+      "name": "Dev Terminal",
+      "type": "theme",
+      "category": "native-chrome-theme",
+      "description": "Professional developer workstation aesthetic with muted green and graphite.",
+      "version": "1.0.0",
+      "directory": "products/themes/dev-terminal",
+      "brandIdentity": {
+        "palette": ["#0A0E0C", "#50C878", "#161C18"],
+        "mood": "terminal"
+      },
+      "permissions": [],
+      "assets": {
+        "frame": "images/theme_frame.png",
+        "ntpBackground": "images/theme_ntp_background.png",
+        "storePreview": "store/preview-1280x800.png"
+      },
+      "build": { "kind": "theme-copy", "outDir": "dist/themes/dev-terminal" },
+      "releaseStatus": "ready"
+    },
+    {
+      "id": "noor",
+      "name": "Noor",
+      "type": "theme",
+      "category": "native-chrome-theme",
+      "description": "Refined Islamic geometric patterns in warm ivory, deep emerald, midnight blue, and gold.",
+      "version": "1.0.0",
+      "directory": "products/themes/noor",
+      "brandIdentity": {
+        "palette": ["#101C1A", "#C4A050", "#F5EEDC"],
+        "mood": "geometric-elegance"
+      },
+      "permissions": [],
+      "assets": {
+        "frame": "images/theme_frame.png",
+        "ntpBackground": "images/theme_ntp_background.png",
+        "storePreview": "store/preview-1280x800.png"
+      },
+      "build": { "kind": "theme-copy", "outDir": "dist/themes/noor" },
+      "releaseStatus": "ready"
+    },
+    {
+      "id": "salah-sun",
+      "name": "Salah & Sun Companion",
+      "type": "extension",
+      "category": "new-tab",
+      "description": "Islamic prayer times and astronomical companion for your New Tab page.",
+      "version": "1.0.0",
+      "directory": "products/new-tab/salah-sun",
+      "brandIdentity": {
+        "palette": ["#0B1A24", "#C9A227", "#1A6B6B"],
+        "mood": "astronomical-calm"
+      },
+      "permissions": ["storage", "alarms", "notifications", "geolocation (optional)"],
+      "assets": {
+        "background": "assets/background.jpg",
+        "icons": "icons/",
+        "storeScreenshot": "store/screenshot-1280x800.png"
+      },
+      "build": { "kind": "extension-copy", "outDir": "dist/extensions/salah-sun" },
+      "releaseStatus": "ready"
+    },
+    {
+      "id": "deep-work",
+      "name": "Deep Work",
+      "type": "extension",
+      "category": "new-tab",
+      "description": "A calm productivity New Tab with focus timer, todos, goals, and shortcuts.",
+      "version": "1.0.0",
+      "directory": "products/new-tab/deep-work",
+      "brandIdentity": {
+        "palette": ["#2C3530", "#8FA88A", "#E8E4DC"],
+        "mood": "focused-calm"
+      },
+      "permissions": ["storage"],
+      "assets": {
+        "background": "assets/background.jpg",
+        "icons": "icons/",
+        "storeScreenshot": "store/screenshot-1280x800.png"
+      },
+      "build": { "kind": "extension-copy", "outDir": "dist/extensions/deep-work" },
+      "releaseStatus": "ready"
+    },
+    {
+      "id": "devspace",
+      "name": "DevSpace",
+      "type": "extension",
+      "category": "new-tab",
+      "description": "Developer productivity New Tab with snippets, notes, tools, and workspace shortcuts.",
+      "version": "1.0.0",
+      "directory": "products/new-tab/devspace",
+      "brandIdentity": {
+        "palette": ["#0D1117", "#58A6FF", "#21262D"],
+        "mood": "engineering"
+      },
+      "permissions": ["storage"],
+      "assets": {
+        "background": "assets/background.jpg",
+        "icons": "icons/",
+        "storeScreenshot": "store/screenshot-1280x800.png"
+      },
+      "build": { "kind": "extension-copy", "outDir": "dist/extensions/devspace" },
+      "releaseStatus": "ready"
+    },
+    {
+      "id": "cosmos",
+      "name": "Cosmos",
+      "type": "extension",
+      "category": "new-tab",
+      "description": "Astronomy-inspired New Tab with world clocks, calendar, and celestial information.",
+      "version": "1.0.0",
+      "directory": "products/new-tab/cosmos",
+      "brandIdentity": {
+        "palette": ["#050814", "#7B6CF6", "#1B2340"],
+        "mood": "celestial"
+      },
+      "permissions": ["storage"],
+      "assets": {
+        "background": "assets/background.jpg",
+        "icons": "icons/",
+        "storeScreenshot": "store/screenshot-1280x800.png"
+      },
+      "build": { "kind": "extension-copy", "outDir": "dist/extensions/cosmos" },
+      "releaseStatus": "ready"
+    }
+  ]
+}

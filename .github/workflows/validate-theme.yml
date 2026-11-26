@@ -1,4 +1,4 @@
-name: Validate Chrome Theme
+name: Validate Chrome Themes
 
 on:
   push:
@@ -10,8 +10,8 @@ permissions:
   contents: read
 
 jobs:
-  validate-theme:
-    name: Validate Obsidian theme package
+  validate-themes:
+    name: Validate native Chrome themes
     runs-on: ubuntu-latest
     steps:
       - name: Check out repository
@@ -19,6 +19,9 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 22
-      - name: Validate manifest and theme assets
-        run: node scripts/validate-theme.mjs
+          node-version: "22"
+          cache: npm
+      - name: Install dependencies
+        run: npm ci
+      - name: Validate theme packages
+        run: npm run validate:themes

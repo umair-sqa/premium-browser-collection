@@ -1,0 +1,37 @@
+{
+  "manifest_version": 3,
+  "name": "Nebula — Aurevia Studio",
+  "version": "1.0.0",
+  "description": "A deep-space Chrome theme with cosmic clouds, indigo, violet, and distant starlight.",
+  "theme": {
+    "images": {
+      "theme_frame": "images/theme_frame.png",
+      "theme_ntp_background": "images/theme_ntp_background.png"
+    },
+    "colors": {
+      "frame": [14, 10, 32],
+      "frame_inactive": [22, 16, 42],
+      "frame_incognito": [10, 8, 24],
+      "frame_incognito_inactive": [18, 14, 36],
+      "toolbar": [28, 20, 48],
+      "tab_text": [230, 220, 255],
+      "tab_background_text": [150, 140, 180],
+      "bookmark_text": [210, 200, 240],
+      "ntp_background": [10, 8, 28],
+      "ntp_text": [228, 220, 250],
+      "ntp_link": [160, 120, 255],
+      "ntp_header": [36, 28, 60],
+      "ntp_section": [24, 18, 44],
+      "button_background": [60, 40, 100]
+    },
+    "tints": {
+      "buttons": [0.72, 0.45, 0.55],
+      "frame": [0.72, 0.3, 0.14],
+      "background_tab": [0.72, 0.2, 0.38]
+    },
+    "properties": {
+      "ntp_background_alignment": "center",
+      "ntp_background_repeat": "no-repeat"
+    }
+  }
+}
