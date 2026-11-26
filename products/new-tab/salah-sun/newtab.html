@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Salah &amp; Sun Companion — Aurevia Studio</title>
+    <link rel="stylesheet" href="newtab.css" />
+  </head>
+  <body>
+    <div class="bg" aria-hidden="true"></div>
+    <div class="bg-overlay" aria-hidden="true"></div>
+
+    <a class="skip-link" href="#main">Skip to content</a>
+
+    <header class="top-bar">
+      <div class="brand">
+        <span class="brand-mark" aria-hidden="true"></span>
+        <div class="brand-text">
+          <p class="brand-studio">Aurevia Studio</p>
+          <h1 class="brand-name">Salah &amp; Sun Companion</h1>
+        </div>
+      </div>
+      <button
+        type="button"
+        id="settings-toggle"
+        class="icon-btn"
+        aria-label="Open settings"
+        aria-controls="settings-panel"
+        aria-expanded="false"
+      >
+        <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6">
+          <circle cx="12" cy="12" r="3" />
+          <path d="M12 2.5v2.2M12 19.3v2.2M4.9 4.9l1.6 1.6M17.5 17.5l1.6 1.6M2.5 12h2.2M19.3 12h2.2M4.9 19.1l1.6-1.6M17.5 6.5l1.6-1.6" stroke-linecap="round" />
+        </svg>
+      </button>
+    </header>
+
+    <main id="main" class="dashboard">
+      <section class="hero-time glass" aria-live="polite">
+        <p id="clock" class="clock" aria-label="Current time">--:--:--</p>
+        <p id="gregorian-date" class="date-line">—</p>
+        <p id="hijri-date" class="hijri-line" title="Algorithmic Hijri approximation — not official Umm al-Qura">
+          —
+        </p>
+        <p id="location-display" class="location-line">Location not set</p>
+      </section>
+
+      <section class="status-row" aria-live="polite">
+        <div id="loading-state" class="state-banner loading" hidden>
+          Calculating prayer times…
+        </div>
+        <div id="error-state" class="state-banner error" role="alert" hidden></div>
+        <div id="empty-location" class="state-banner hint" hidden>
+          Set your location in settings to see prayer times.
+          <button type="button" id="open-settings-from-hint" class="text-btn">
+            Open settings
+          </button>
+        </div>
+      </section>
+
+      <section id="prayer-focus" class="prayer-focus glass" hidden>
+        <div class="focus-block">
+          <p class="focus-label">Now</p>
+          <p id="current-prayer" class="focus-value">—</p>
+        </div>
+        <div class="focus-divider" aria-hidden="true"></div>
+        <div class="focus-block">
+          <p class="focus-label">Next</p>
+          <p id="next-prayer" class="focus-value">—</p>
+          <p id="countdown" class="countdown" aria-live="polite">—</p>
+        </div>
+        <p id="method-badge" class="method-badge">Method: —</p>
+      </section>
+
+      <section id="times-grid" class="times-grid glass" aria-label="Daily prayer and sun times" hidden>
+        <article class="time-card" data-key="fajr">
+          <h2>Fajr</h2>
+          <p class="time-value" id="time-fajr">—</p>
+        </article>
+        <article class="time-card sun" data-key="sunrise">
+          <h2>Sunrise</h2>
+          <p class="time-value" id="time-sunrise">—</p>
+        </article>
+        <article class="time-card" data-key="dhuhr">
+          <h2>Dhuhr</h2>
+          <p class="time-value" id="time-dhuhr">—</p>
+        </article>
+        <article class="time-card" data-key="asr">
+          <h2>Asr</h2>
+          <p class="time-value" id="time-asr">—</p>
+        </article>
+        <article class="time-card sun" data-key="sunset">
+          <h2>Sunset</h2>
+          <p class="time-value" id="time-sunset">—</p>
+        </article>
+        <article class="time-card" data-key="maghrib">
+          <h2>Maghrib</h2>
+          <p class="time-value" id="time-maghrib">—</p>
+        </article>
+        <article class="time-card" data-key="isha">
+          <h2>Isha</h2>
+          <p class="time-value" id="time-isha">—</p>
+        </article>
+      </section>
+
+      <section id="qibla-panel" class="qibla-panel glass" hidden>
+        <h2 class="section-title">Qibla</h2>
+        <div class="qibla-visual">
+          <div class="compass" aria-hidden="true">
+            <span class="compass-n">N</span>
+            <div id="qibla-arrow" class="qibla-arrow"></div>
+          </div>
+          <div class="qibla-meta">
+            <p id="qibla-degrees" class="qibla-degrees">—°</p>
+            <p class="qibla-note">
+              Mathematical bearing to the Kaaba (21.4225°N, 39.8262°E). Not a magnetic compass.
+            </p>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <div
+      id="settings-backdrop"
+      class="settings-backdrop"
+      hidden
+      aria-hidden="true"
+    ></div>
+
+    <aside
+      id="settings-panel"
+      class="settings-panel"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="settings-title"
+      hidden
+    >
+      <div class="settings-header">
+        <h2 id="settings-title">Settings</h2>
+        <button type="button" id="settings-close" class="icon-btn" aria-label="Close settings">
+          <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8">
+            <path d="M6 6l12 12M18 6L6 18" stroke-linecap="round" />
+          </svg>
+        </button>
+      </div>
+
+      <form id="settings-form" class="settings-form">
+        <fieldset>
+          <legend>Location</legend>
+          <p class="privacy-note">
+            Location is optional and stored only on this device via
+            <code>chrome.storage.local</code>. Nothing is sent to Aurevia Studio
+            or any remote server. Geolocation requires your explicit permission.
+          </p>
+          <label>
+            Place name (optional)
+            <input type="text" id="place-name" name="placeName" autocomplete="address-level2" placeholder="e.g. Cairo" />
+          </label>
+          <div class="latlng-row">
+            <label>
+              Latitude
+              <input type="number" id="latitude" name="latitude" step="any" min="-90" max="90" placeholder="21.4225" required />
+            </label>
+            <label>
+              Longitude
+              <input type="number" id="longitude" name="longitude" step="any" min="-180" max="180" placeholder="39.8262" required />
+            </label>
+          </div>
+          <button type="button" id="use-geolocation" class="secondary-btn">
+            Use my location
+          </button>
+          <p id="geo-status" class="field-status" role="status" aria-live="polite"></p>
+        </fieldset>
+
+        <fieldset>
+          <legend>Calculation</legend>
+          <label>
+            Method
+            <select id="calculation-method" name="calculationMethod"></select>
+          </label>
+          <label>
+            Asr method
+            <select id="asr-method" name="asrMethod">
+              <option value="Shafi">Standard / Shafi (shadow × 1)</option>
+              <option value="Hanafi">Hanafi (shadow × 2)</option>
+            </select>
+          </label>
+          <label>
+            High-latitude rule
+            <select id="high-latitude-rule" name="highLatitudeRule">
+              <option value="MiddleOfTheNight">Middle of the night</option>
+              <option value="SeventhOfTheNight">1/7 of the night</option>
+              <option value="TwilightAngle">Twilight angle</option>
+            </select>
+          </label>
+        </fieldset>
+
+        <fieldset>
+          <legend>Reminders</legend>
+          <label class="toggle-row">
+            <input type="checkbox" id="reminders-enabled" name="remindersEnabled" />
+            <span>Daily prayer reminders</span>
+          </label>
+          <label>
+            Minutes before
+            <input type="number" id="reminder-minutes" name="reminderMinutesBefore" min="0" max="60" step="1" value="10" />
+          </label>
+          <p class="privacy-note">
+            Reminders use Chrome alarms and notifications. Notification
+            permission is requested only when you enable this option.
+          </p>
+          <p id="reminder-status" class="field-status" role="status" aria-live="polite"></p>
+        </fieldset>
+
+        <div class="settings-actions">
+          <button type="submit" class="primary-btn">Save</button>
+          <button type="button" id="settings-cancel" class="ghost-btn">Cancel</button>
+        </div>
+      </form>
+    </aside>
+
+    <footer class="footer">
+      <p>Aurevia Studio · Prayer times via adhan astronomical algorithms · Hijri date is algorithmic approx.</p>
+    </footer>
+
+    <script src="vendor/adhan.umd.min.js"></script>
+    <script src="src/prayer-times.js"></script>
+    <script src="storage.js"></script>
+    <script src="newtab.js"></script>
+  </body>
+</html>
