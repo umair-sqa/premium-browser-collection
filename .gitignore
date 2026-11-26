@@ -1,0 +1,14 @@
+# Local development
+.DS_Store
+Thumbs.db
+*.log
+.env
+.env.*
+!.env.example
+
+# Build and test output
+node_modules/
+dist/
+build/
+coverage/
+release/
